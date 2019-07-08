@@ -1,0 +1,21 @@
+{
+  "name": "pola",
+  "version": "1.0.0",
+  "description": "",
+  "main": "pola.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "alias-quokka-plugin": "^0.1.0",
+    "eslint": "^6.0.1",
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.1"
+  },
+  "quokka": {
+    "babel": true
+  }
+}

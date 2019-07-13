@@ -20,6 +20,7 @@ const tap = value => (console.log(value), value)
 // const validate = fn => value => fn(value)
 
 ////////////////////////////////////////
+
 const not = value => !value
 const isGreaterThan = bound => value => value > bound
 const isLesserThan = bound => value => value < bound
@@ -33,6 +34,8 @@ const isNotEqualTo = a => b =>
   )(b)
 const add = a => b => a + b
 const multiply = a => b => a * b
+const map = list => fn => list.map(fn)
+
 ////////////////////////////////////////
 
 // const result = validate(v => v > 10)(11)

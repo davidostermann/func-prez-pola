@@ -8,6 +8,16 @@ exports.pipe = (...fns) => x => fns.reduce((acc, fn) => fn(acc), x)
 exports.all = (...args) => value => args.map(fn => fn(value)).every(res => res)
 exports.tap = value => (console.log(value), value)
 
+/////////////////////////////////////////
+
+// const validate = function(validationFn) {
+//   return function(value) {
+//     return validationFn(value)
+//   }
+// }
+
+////////////////////////////////////////
+
 const not = exports.not = value => !value
 exports.isGreaterThan = bound => value => value > bound
 exports.isSmallerThan = bound => value => value < bound
@@ -31,11 +41,6 @@ exports.mapObject = fn => obj =>
     {}
   )
 exports.applySpec = spec => obj =>
-  Object.entries(obj).reduce(
-    (acc, [key, value]) => {
-      console.log(spec)
-      acc[key] = spec[key](value)
-      return acc 
-    },
-    {}
-  )
+  Object
+  .entries(obj)
+  .reduce((a, [k, v]) => ((a[k] = spec[k](v)), a), {})

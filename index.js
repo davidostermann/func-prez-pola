@@ -9,14 +9,14 @@ const {
 const getStockErrors = getErrors(stockValidationRuleList)
 const getEmailErrors = getErrors(emailRuleList)
 
-const formValues = {
-  stock: 23,
-  email: "tttttt.fr"
-}
-
 const applyValidation = applySpec({
   stock: getStockErrors,
   email: getEmailErrors
 })
 
-console.log("result : ", applyValidation(formValues))
+const result = applyValidation({
+  stock: 23,
+  email: "tttttt.fr"
+})
+
+console.log(result)

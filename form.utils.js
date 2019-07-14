@@ -1,6 +1,4 @@
-const {
-  applySpec
-} = require('./utils')
+const { map, tap, pipe, filter } = require("./utils")
 
 exports.getErrors = rules => value =>
   rules.reduce((acc, rule) => {
@@ -9,3 +7,10 @@ exports.getErrors = rules => value =>
     return acc
   }, [])
 
+const applyRule = value => ({ validFn, errorFn }) => !validFn(value) && errorFn(value)
+
+const applyRules = exports.applyRules = (...rules) => value =>
+  pipe(
+    map(applyRule(value)),
+    filter(v => v)
+  )(rules)

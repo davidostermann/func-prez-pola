@@ -1,12 +1,11 @@
 const {
   compose,
   all,
-  isGreaterThan,
-  isSmallerThan,
+  isBetween,
   isMultipleOf,
   isNotEqualTo,
   prop,
-  applyTo,
+  apply
 } = require("./utils")
 
 ////////////////////////////////////////
@@ -27,38 +26,56 @@ const {
 
 ////////////////////////////////////////
 
-const validate = applyTo
+const validate = compose(apply, all)
+const isValidQuantity = validate(
+  isBetween(40, 70),
+  isMultipleOf(10),
+  isNotEqualTo(50)
+)
+
+const result = isValidQuantity(60)
+
+// const isValidQuantity = function(quantity) {
+//   if (quantity > 40 && quantity < 70) {
+//     if (quantity % 10 === 0) {
+//       if (quantity !== 50) {
+//         return true
+//       }
+//     }
+//   }
+// }
+// const result = isValidQuantity(60)
+// console.log("result1 : ", result)
 
 /**
  * Good way
  */
 const stockValidationFn = all(
-  isGreaterThan(40),
+  isBetween(40, 70),
   isMultipleOf(10),
-  isNotEqualTo(50),
-  isSmallerThan(70)
+  isNotEqualTo(50)
 )
 
 const validStock = compose(
-  validate(stockValidationFn),
+  apply(stockValidationFn),
   prop("stock")
 )
 
 /**
  * Bad way
  */
-const validateStock = function(form) {
-  if (form) {
-    if (form.stock) {
-      if (form.stock > 40 && form.stock < 70) {
-        if (form.stock % 10 === 0) {
-          if (form.stock !== 50) {
-            return true
-          }
-        }
-      }
-    }
-  }
-}
+// const validateStock = function(form) {
+//   if (form) {
+//     if (form.stock) {
+//       if (form.stock > 40 && form.stock < 70) {
+//         if (form.stock % 10 === 0) {
+//           if (form.stock !== 50) {
+//             return true
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
 
-console.log("result : ", validStock(60))
+console.log("result2 : ", validStock({ stock: 60 }))

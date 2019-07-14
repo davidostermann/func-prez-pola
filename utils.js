@@ -19,21 +19,20 @@ exports.tap = value => (console.log(value), value)
 ////////////////////////////////////////
 
 const not = exports.not = value => !value
-exports.isGreaterThan = bound => value => value > bound
-exports.isSmallerThan = bound => value => value < bound
+const isGreaterThan = exports.isGreaterThan = bound => value => value > bound
+const isSmallerThan = exports.isSmallerThan = bound => value => value < bound
+exports.isBetween = (a, b) => value => isGreaterThan(a) && isSmallerThan(b)
 exports.isInteger = value => value % 1 === 0
 exports.isMultipleOf = coefficient => value => value % coefficient === 0
 const isEqualTo = exports.isEqualTo = a => b => a === b
 exports.isNotEqualTo = a => b =>
-  compose(
-    not,
-    isEqualTo(a)
-  )(b)
+  compose(not, isEqualTo(a))(b)
 exports.add = a => b => a + b
 exports.multiply = a => b => a * b
-exports.map = list => fn => list.map(fn)
+exports.map = fn => list => list.map(fn)
+exports.filter = fn => list => list.filter(fn)
 exports.prop = key => obj => obj && obj[key]
-exports.applyTo = fn => value => fn(value)
+exports.apply = fn => value => fn(value)
 exports.assoc = (key, value) => obj => ({ ...obj, [key]: value })
 exports.mapObject = fn => obj =>
   Object.entries(obj).reduce(
@@ -44,3 +43,5 @@ exports.applySpec = spec => obj =>
   Object
   .entries(obj)
   .reduce((a, [k, v]) => ((a[k] = spec[k](v)), a), {})
+exports.isDefined = value => !!value
+exports.removeUndefinedItems = items => JSON.parse(JSON.stringify(items))
